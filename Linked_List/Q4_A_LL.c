@@ -86,7 +86,48 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	if (ll == NULL || ll->head == NULL)
+		return;
+	
+		ListNode *cur = ll->head;
+		ListNode *prev = NULL;
+		ListNode *tail = ll->head;
+
+	while (tail->next != NULL)
+		tail = tail->next;
+		
+	int size = ll->size;
+	int count = 0;
+
+	while (cur != NULL && count < size)
+	{
+		if (cur->item % 2 == 0)
+		{
+			ListNode *evenNode = cur;
+
+			if (prev == NULL)
+			{
+				ll->head = cur->next;
+				cur = ll->head;
+			}
+			else
+			{
+				prev->next = cur->next;
+				cur = prev->next;
+			}
+
+			tail->next = evenNode;
+			evenNode->next = NULL;
+			tail = evenNode;
+		}
+		else
+		{
+			prev = cur;
+			cur = cur->next;
+		}
+
+		count++;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +149,6 @@ void printList(LinkedList *ll){
 	printf("\n");
 }
 
-
 void removeAllItems(LinkedList *ll)
 {
 	ListNode *cur = ll->head;
@@ -122,7 +162,6 @@ void removeAllItems(LinkedList *ll)
 	ll->head = NULL;
 	ll->size = 0;
 }
-
 
 ListNode *findNode(LinkedList *ll, int index){
 
@@ -177,7 +216,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	return -1;
 }
-
 
 int removeNode(LinkedList *ll, int index){
 

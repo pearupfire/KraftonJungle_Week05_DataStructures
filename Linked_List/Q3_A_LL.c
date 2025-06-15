@@ -86,7 +86,54 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	if (ll == NULL || ll->head == NULL)
+		return;
+	
+	ListNode *cur = ll->head;
+	ListNode *prev = NULL;
+	ListNode *tail = ll->head;
+
+	// 마지막 노드 찾기
+	while (tail->next != NULL)
+		tail = tail->next;
+	
+	int size = ll->size;	   // 리스트 길이 저장
+	int count = 0;			   // 순회한 노드 수 저장 변수
+
+	// 현재 노드가 없지 않고, lasttail 이후는 진행x 
+	// count가 size보다 커지면 중단 (무한 루프 방지)
+	while (cur != NULL && count < size)
+	{
+		// 현재 노드의 값이 짝수가 아니라면
+		if (cur->item % 2 != 0)
+		{
+			ListNode *oddNode = cur; // 홀수 노드 저장
+
+			// 현재 노드가 head인 경우 (prev가 없는 경우)
+			if (prev == NULL)
+			{
+				ll->head = cur->next; // 리스트의 head를 현재 다음으로 
+				cur = ll->head;		  // 현재를 head로
+			}
+			else // prev가 있으면
+			{
+				prev->next = cur->next;	// prev 갱신
+				cur = cur->next;		// 
+			}
+			
+			tail->next = oddNode; // tail 뒤에 홀수를 추가
+			oddNode->next = NULL; // 
+			tail = oddNode;		  // tail 갱신 
+		}
+		else // 짝수이면
+		{
+			// 한칸씩 앞으로 이동
+			prev = cur; 	 // 이전 노드를 현재 노드로
+			cur = cur->next; // 현재 노드를 다음 노드로
+		}
+		
+		count++;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +155,6 @@ void printList(LinkedList *ll){
 	printf("\n");
 }
 
-
 void removeAllItems(LinkedList *ll)
 {
 	ListNode *cur = ll->head;
@@ -122,7 +168,6 @@ void removeAllItems(LinkedList *ll)
 	ll->head = NULL;
 	ll->size = 0;
 }
-
 
 ListNode *findNode(LinkedList *ll, int index){
 
@@ -177,7 +222,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	return -1;
 }
-
 
 int removeNode(LinkedList *ll, int index){
 

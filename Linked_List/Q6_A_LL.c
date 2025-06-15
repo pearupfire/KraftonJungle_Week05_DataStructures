@@ -88,7 +88,45 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+	// 리스트가 비었거나 노드가 1개 이하인 경우 예외처리
+	// 이중 포인터를 사용할 때는 *ptrhead로 실제 head에 접근할 수 있다.
+	if (ptrHead == NULL || *ptrHead == NULL || (*ptrHead)->next == NULL)
+		return 0;
+	
+	
+	ListNode *cur = (*ptrHead)->next; // 현재 노드를 첫번재 노드 다음 노드로 설정
+	ListNode *maxNode = *ptrHead; 	  // maxNode는 현재 가장 큰 값을 저장 (처음은 head를 저장)
+	ListNode *prevMax = NULL;		  // prevMax는 maxNode 앞노드를 저장 (나중에 연결을 끊기 위해)
+	ListNode *prev = *ptrHead;		  // prev는 현재 순회 중인 노드의 이전 노드를 저장
+	int maxValue = (*ptrHead)->item;
+	
+	while (cur != NULL)
+	{
+		// 현재 값이 최대 값보다 크다면
+		if (maxValue < cur->item)
+		{
+			maxValue = cur->item; // maxValue 갱신
+			maxNode = cur;		  // maxNode 갱신
+			prevMax = prev;		  // maxNode 이전 노드를 저장
+		}
+		// 한 칸 앞으로 이동
+		prev = cur;
+		cur = cur->next;
+	}
+
+	// 이미 맨앞에 최대노드가 있을 경우 
+	if (maxNode == *ptrHead) // maxNode가 head와 같다면
+	 	return 0;
+	
+	// 중간에 최대노드가 있다면 
+	if (prevMax != NULL) // prevMax가 있다면 
+		prevMax->next = maxNode->next; //prevMax의 다음노드를 maxNode의 다음으로 설정
+
+	// maxNode를 리스트의 맨 앞으로 이동
+	maxNode->next = *ptrHead; // maxNode의 다음은 ptrHead를 가리킴
+	*ptrHead = maxNode;	      // ptrHead는 maxNode로 갱신
+
+	return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +148,7 @@ void printList(LinkedList *ll){
 	printf("\n");
 }
 
-ListNode * findNode(LinkedList *ll, int index){
+ListNode *findNode(LinkedList *ll, int index){
 
 	ListNode *temp;
 
@@ -163,7 +201,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	return -1;
 }
-
 
 int removeNode(LinkedList *ll, int index){
 

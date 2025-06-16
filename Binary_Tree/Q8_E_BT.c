@@ -102,7 +102,25 @@ int main()
 
 int hasGreatGrandchild(BTNode *node)
 {
-	/* add your code here */
+    if (node == NULL)
+        return 0;
+    
+    // 왼쪽 오른쪽 높이 재귀
+    int leftHeight = hasGreatGrandchild(node->left); 
+    int rightHeigt = hasGreatGrandchild(node->right);
+    int maxHeight;
+
+    // 왼쪽 오른쪽 높이 중 더 큰 값 
+    if (leftHeight > rightHeigt)
+        maxHeight = leftHeight;
+    else
+        maxHeight = rightHeigt;
+    
+    // 깊이가 3 이상이면 증손자를 가지고 있으므로 출력
+    if (maxHeight >= 3)
+        printf("%d", node->item);
+    
+    return maxHeight + 1; // 현재 노드 포함이므로 +1
 }
 
 //////////////////////////////////////////////////////////////////////////////////

@@ -101,9 +101,22 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int sumOfOddNodes(BTNode *node)
-
 {
-    /* add your code here */
+    int sum = 0;
+
+    if (node == NULL)
+        return 0;
+
+    // 노드의 값이 홀수라면
+    if (node->item % 2 != 0)
+        sum = node->item;
+
+    // 왼쪽과 오른쪽의 홀수를 재귀로 누적
+    int leftSum = sumOfOddNodes(node->left);
+    int rightSum = sumOfOddNodes(node->right);
+
+    // 현재 노드의 값과 왼쪽 오른쪽 합을 더해 반환
+    return sum + leftSum + rightSum;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

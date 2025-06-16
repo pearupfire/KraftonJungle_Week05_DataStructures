@@ -114,13 +114,25 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int identical(BTNode *tree1, BTNode *tree2)
-
 {
-   /* add your code here */
+    if (tree1 == NULL && tree2 == NULL) // 트리가 모두 비었다면
+        return 1; // 동일
+    
+    if (tree1 == NULL || tree2 == NULL) // 하나의 트리만 null이 아니라면 
+        return 0; // 틀림
+    
+    if (tree1->item != tree2->item) // 루트 노드의 값이 다르면
+        return 0; // 틀림
+    
+    // 트리의 왼쪽과 오른쪽을 재귀로 같은 지 확인
+    return identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
+/// @brief 이진 트리 노드 생성 함수
+/// @param item 새 노드에 저장할 값
+/// @return 생성된 btnode 포인터
 BTNode *createBTNode(int item){
     BTNode *newNode = malloc(sizeof(BTNode));
     newNode->item = item;
@@ -131,7 +143,8 @@ BTNode *createBTNode(int item){
 
 //////////////////////////////////////////////////////////////////////////////////
 
-
+/// @brief 이진 트리 생성 함수
+/// @return 생성된 루트 노드 포인터
 BTNode *createTree()
 {
     Stack stk;
@@ -186,6 +199,9 @@ BTNode *createTree()
     return root;
 }
 
+/// @brief 스택에 트리 노드를 추가하는 함수
+/// @param stk stack 구조체 포인터
+/// @param node node 추가할 btnode 포인터
 void push( Stack *stk, BTNode *node){
     StackNode *temp;
 
@@ -203,6 +219,9 @@ void push( Stack *stk, BTNode *node){
     }
 }
 
+/// @brief 스택에 노드를 제거하고 반환하는 함수
+/// @param stk 
+/// @return 스택의 맨위에 있던 btnode 포인터, 없으면 NULL
 BTNode* pop(Stack *stk){
    StackNode *temp, *top;
    BTNode *ptr;
@@ -228,6 +247,8 @@ void printTree(BTNode *node){
     printTree(node->right);
 }
 
+/// @brief 이진트리 노드를 순회하면서 메모리르 해제하는 함수
+/// @param node 루트 노드의 이중 포인터 (해제 후 Null로 설정)
 void removeAll(BTNode **node){
     if(*node != NULL){
         removeAll(&((*node)->left));

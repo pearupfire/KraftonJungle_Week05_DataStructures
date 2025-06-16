@@ -105,7 +105,18 @@ int main()
 
 void mirrorTree(BTNode *node)
 {
-	/* add your code here */
+    // 노드가 없다면 
+    if (node == NULL)
+        return;
+    
+    // 왼쪽과 오른쪽 스왑
+    BTNode *temp = node->left;
+    node->left = node->right;
+    node->right = temp;
+    
+    // 왼쪽 오른쪽 서브트리 재귀로 반복
+    mirrorTree(node->left);
+    mirrorTree(node->right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

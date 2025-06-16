@@ -11,12 +11,14 @@ Purpose: Implementing the required functions for Question 1 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
-typedef struct _listnode{
+typedef struct _listnode
+{
 	int item;
 	struct _listnode *next;
 } ListNode;			// You should not change the definition of ListNode
 
-typedef struct _linkedlist{
+typedef struct _linkedlist
+{
 	int size;
 	ListNode *head;
 } LinkedList;			// You should not change the definition of LinkedList
@@ -80,8 +82,6 @@ int main()
 			printf("Choice unknown;\n");
 			break;
 		}
-
-
 	}
 	return 0;
 }
@@ -137,8 +137,8 @@ int insertSortedLL(LinkedList *ll, int item)
 
 /// @brief 연결 리스트 출력 함수
 /// @param ll 
-void printList(LinkedList *ll){
-
+void printList(LinkedList *ll)
+{
 	ListNode *cur;
 
 	// 연결 리스트가 없으면 종료
@@ -171,7 +171,8 @@ void removeAllItems(LinkedList *ll)
 	ListNode *tmp;
 
 	// 리스트가 null일때까지 반복
-	while (cur != NULL){
+	while (cur != NULL)
+	{
 		tmp = cur->next; // 다음 노드를 tmp에 저장
 		free(cur);		 // 현재 노드 메모리에서 해제
 		cur = tmp;		 // 다음 노드를 현재 노드로 이동
@@ -184,8 +185,8 @@ void removeAllItems(LinkedList *ll)
 /// @param ll 찾을 연결 리스트 포인터
 /// @param index 찾는 노드 인덱스
 /// @return 인덱스 노드 포인터 반환, 없으면 null 반환
-ListNode *findNode(LinkedList *ll, int index){
-
+ListNode *findNode(LinkedList *ll, int index)
+{
 	ListNode *temp;
 
 	// 리스트가 null 이거나 인덱스가 범위를 벗어나면 null 반환
@@ -200,7 +201,8 @@ ListNode *findNode(LinkedList *ll, int index){
 		return NULL;
 
 	// index 위치까지 temp를 다음 노드로 이동
-	while (index > 0){
+	while (index > 0)
+	{
 		temp = temp->next;
 
 		// 중간에 null이 나오면 잘못된 인덱스이므로 null 반환
@@ -218,8 +220,8 @@ ListNode *findNode(LinkedList *ll, int index){
 /// @param index index 삽입할 위치
 /// @param value value 삽입할 노드의 값
 /// @return 성공 시 0, 실패 시 -1
-int insertNode(LinkedList *ll, int index, int value){
-
+int insertNode(LinkedList *ll, int index, int value)
+{
 	ListNode *pre, *cur;
 
 	// 리스트가 NULL이거나, 인덱스가 유효하지 않으면 삽입 실패
@@ -228,7 +230,8 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	// If empty list or inserting first node, need to update head pointer
 	// 리스트가 비어 있거나 맨 앞에 삽입하는 경우
-	if (ll->head == NULL || index == 0){
+	if (ll->head == NULL || index == 0)
+	{
 		cur = ll->head; // 기존 헤드를 백업 
 		ll->head = malloc(sizeof(ListNode)); // 새 노드 생성
 		ll->head->item = value;				 // 값 설정
@@ -237,11 +240,11 @@ int insertNode(LinkedList *ll, int index, int value){
 		return 0;
 	}
 
-
 	// Find the nodes before and at the target position
 	// Create a new node and reconnect the links
 	// 삽입할 위치 바로 앞 노드를 찾음
-	if ((pre = findNode(ll, index - 1)) != NULL){
+	if ((pre = findNode(ll, index - 1)) != NULL)
+	{
 		cur = pre->next;						// 기존  다음 노드 백업
 		pre->next = malloc(sizeof(ListNode));   // 새 노드 생성
 		pre->next->item = value;				// 값 설정
@@ -257,8 +260,8 @@ int insertNode(LinkedList *ll, int index, int value){
 /// @param ll 
 /// @param index 
 /// @return 
-int removeNode(LinkedList *ll, int index){
-
+int removeNode(LinkedList *ll, int index)
+{
 	ListNode *pre, *cur;
 
 	// Highest index we can remove is size-1
@@ -267,7 +270,8 @@ int removeNode(LinkedList *ll, int index){
 
 	// If removing first node, need to update head pointer
 	// 첫 노드 제거하는 경우
-	if (index == 0){
+	if (index == 0)
+	{
 		cur = ll->head->next; // 헤드 다음 노드를 저장
 		free(ll->head);		  // 첫 번째 노드 메모리 해제
 		ll->head = cur;		  // head를 두 번째 노드로 업데이트
@@ -279,8 +283,8 @@ int removeNode(LinkedList *ll, int index){
 	// Find the nodes before and after the target position
 	// Free the target node and reconnect the links
 	// 제거할 노드의 앞 노드를 찾았을 경우
-	if ((pre = findNode(ll, index - 1)) != NULL){
-
+	if ((pre = findNode(ll, index - 1)) != NULL)
+	{
 		// 예외 처리 
 		if (pre->next == NULL)
 			return -1;

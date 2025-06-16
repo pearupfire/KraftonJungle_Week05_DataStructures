@@ -82,7 +82,8 @@ int main()
             {
                 printf("The stack is pairwise consecutive.\n");
             }
-            else{
+            else
+			{
                 printf("The stack is not pairwise consecutive.\n");
             }
             removeAllItems(&(s.ll));
@@ -103,7 +104,47 @@ int main()
 
 int isStackPairwiseConsecutive(Stack *s)
 {
-  /* add your code here */
+	Stack temp; // 임시 스택 초기화
+	temp.ll.head = NULL;
+	temp.ll.size = 0;
+
+	if (isEmptyStack(s)) // 스택이 비었다면
+		return;
+	
+	if (s->ll.size % 2 != 0) // 스택이 홀수라면
+		return 0;
+	else
+	{
+		while(!isEmptyStack(s)) // 스택이 빌때까지 반복
+		{
+			int value_1st = pop(s); // 스택의 앞 요소 2개를 팝
+			int value_2nd = pop(s);
+			int result = abs(value_1st - value_2nd); // 페어 인지 
+
+			if (result != 1) // 페어가 아니라면
+			{
+				push(&temp, value_1st);
+				push(&temp, value_2nd);
+
+				while (!isEmptyStack(&temp))
+					push(s, pop(&temp));
+				
+				return 0;
+			}
+			else // 페어라면
+			{
+				push(&temp, value_1st); // 임시 스텍에 저장
+				push(&temp, value_2nd);
+			}
+		}
+
+		while (!isEmptyStack(&temp)) // 임시 스택이 빌때까지
+		{
+			push(s, pop(&temp)); // 다시 스택에 푸시 
+		}
+
+		return 1;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +192,7 @@ void printList(LinkedList *ll){
 	printf("\n");
 }
 
-ListNode * findNode(LinkedList *ll, int index){
+ListNode *findNode(LinkedList *ll, int index){
 
 	ListNode *temp;
 
@@ -204,7 +245,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	return -1;
 }
-
 
 int removeNode(LinkedList *ll, int index){
 

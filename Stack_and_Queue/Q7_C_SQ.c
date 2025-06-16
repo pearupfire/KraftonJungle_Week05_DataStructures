@@ -25,7 +25,6 @@ typedef struct _linkedlist
 	ListNode *head;
 } LinkedList;	// You should not change the definition of LinkedList
 
-
 typedef struct stack
 {
 	LinkedList ll;
@@ -104,7 +103,42 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	Stack s;			// 스택 초기화
+	s.ll.head = NULL;
+	s.ll.size = 0;
+	
+	// 문자열 만큼 순회
+	for (int i = 0; expression[i] != '\0'; i++)
+	{
+		// 여는 괄호의 경우 스택에 넣기
+		if (expression[i] == '(' || expression[i] == '[' || expression[i] == '{')
+		{
+			push(&s, expression[i]);
+		}
+		// 닫는 괄호이면
+		else if (expression[i] == ')' || expression[i] == ']' || expression[i] == '}')
+		{
+			// 스택이 비었다면 not balanced
+			if (isEmptyStack(&s))
+				return 1;
+			
+			// 스택의 top 값을 확인
+			int top = peek(&s);
+
+			// 괄호가 맞다면 팝
+			if((expression[i] == ')' && top =='(') || (expression[i] == ']' && top =='[') || (expression[i] == '}' && top =='{'))
+				pop(&s);
+			// 맞지 않으면 not balanced
+			else
+				return 0;
+		}
+	}
+
+	// 반복이 끝나고 스택이 비어있다면 balanced 아니면 not
+	if (isEmptyStack(&s))
+		return 0;
+	else
+		return 1;
 }
 
 ////////////////////////////////////////////////////////////
@@ -118,7 +152,6 @@ void removeAllItemsFromStack(Stack *s)
 		pop(s);
 	}
 }
-
 
 void removeAllItems(LinkedList *ll)
 {
@@ -169,7 +202,6 @@ int isEmptyStack(Stack *s)
 		return 0;
 }
 
-
 void printList(LinkedList *ll){
 
 	ListNode *cur;
@@ -187,7 +219,7 @@ void printList(LinkedList *ll){
 	printf("\n");
 }
 
-ListNode * findNode(LinkedList *ll, int index){
+ListNode *findNode(LinkedList *ll, int index){
 
 	ListNode *temp;
 
@@ -248,7 +280,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	return -1;
 }
-
 
 int removeNode(LinkedList *ll, int index){
 

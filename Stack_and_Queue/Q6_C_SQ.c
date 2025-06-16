@@ -25,7 +25,6 @@ typedef struct _linkedlist
 	ListNode *head;
 } LinkedList;	// You should not change the definition of LinkedList
 
-
 typedef struct stack{
 	LinkedList ll;
 } Stack; // You should not change the definition of stack
@@ -109,9 +108,31 @@ int main()
 
 ////////////////////////////////////////////////////////////
 
+// void removeUntil(Stack *s, int value)
+// {
+// 	if (isEmptyStack(s))
+// 		return;
+	
+// 	while (!isEmptyStack(s))
+// 	{
+// 		int num = pop(s);
+
+// 		if (num == value)
+// 		{
+// 			push(s, num);
+// 			break;
+// 		}
+// 	}
+// }
+
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	while (!isEmptyStack(s))
+	{
+		if (peek(s) == value)
+			break;
+		pop(s);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +146,6 @@ void removeAllItemsFromStack(Stack *s)
 		pop(s);
 	}
 }
-
 
 void removeAllItems(LinkedList *ll)
 {
@@ -175,7 +195,6 @@ int isEmptyStack(Stack *s)
 	else
 		return 0;
 }
-
 
 void printList(LinkedList *ll){
 
@@ -255,7 +274,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	return -1;
 }
-
 
 int removeNode(LinkedList *ll, int index){
 

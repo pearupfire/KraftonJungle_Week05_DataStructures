@@ -23,7 +23,6 @@ typedef struct _linkedlist
 	ListNode *head;
 } LinkedList;	// You should not change the definition of LinkedList
 
-
 typedef struct _queue
 {
 	LinkedList ll;
@@ -109,7 +108,12 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
-/* add your code here */
+	if (isEmptyQueue(q)) // 큐가 비었다면 종료
+		return;
+
+	int temp = dequeue(q); 
+	recursiveReverse(q);
+	enqueue(q, temp);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -240,7 +244,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	return -1;
 }
-
 
 int removeNode(LinkedList *ll, int index){
 

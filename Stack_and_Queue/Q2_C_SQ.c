@@ -113,21 +113,49 @@ int main()
 
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
-    /* add your code here */
+	removeAllItemsFromStack(s);
+	ListNode *cur = ll->head;
+
+	while (cur != NULL)
+	{
+		push(s, cur->item);
+		cur = cur->next;
+	}
 }
 
 void removeEvenValues(Stack *s)
 {
-	/* add your code here */
+	Stack temp; 		 // 홀수를 임시로 담을 스택
+	temp.ll.head = NULL; // 초기화
+	temp.ll.size = 0;
+
+	while (!isEmptyStack(s)) // 스택이 안 비었다면
+	{
+		int value = pop(s);  // pop한 값을 value에
+
+		if (value % 2 != 0)  // 홀수라면
+			push(&temp, value); // 임시 스택에 push
+	}
+	
+	while (!isEmptyStack(&temp)) // 임시 스택이 빌때까지
+	{
+		push(s, pop(&temp)); // 기존 스택에 임시 스택을 pop하면서 넣기
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 
+/// @brief 스택 맨 위에 값 추가
+/// @param s 값을 넣을 스택 포인터
+/// @param item 추가할 정수
 void push(Stack *s, int item)
 {
-	insertNode(&(s->ll), 0, item);
+	insertNode(&(s->ll), 0, item); 
 }
 
+/// @brief 스택의 맨 위 값을 제거하고 반환
+/// @param s 값을 꺼낼 스택 포인터
+/// @return 스택에서 꺼낸 정수 값, 스택이 비어있으면 -1000 반환
 int pop(Stack *s)
 {
 	int item;
@@ -141,6 +169,9 @@ int pop(Stack *s)
 		return MIN_INT;
 }
 
+/// @brief 스택이 비어있는지 확인
+/// @param s 
+/// @return 비어있으면 1, 아니면 0
 int isEmptyStack(Stack *s)
 {
 	if ((s->ll).size == 0)
@@ -149,7 +180,8 @@ int isEmptyStack(Stack *s)
 		return 0;
 }
 
-
+/// @brief 스택의 모든 항목 제거 및 메모리 해제
+/// @param s 
 void removeAllItemsFromStack(Stack *s)
 {
 	if (s == NULL)
@@ -162,7 +194,8 @@ void removeAllItemsFromStack(Stack *s)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-
+/// @brief 연결 리스트를 모두 출력
+/// @param ll 연결 리스트 포인터
 void printList(LinkedList *ll){
 
 	ListNode *cur;
@@ -179,7 +212,8 @@ void printList(LinkedList *ll){
 	printf("\n");
 }
 
-
+/// @brief 연결 리스트의 모든 노드를 제거하고 메모리 해제
+/// @param ll 연결 리스트 포인터
 void removeAllItems(LinkedList *ll)
 {
 	ListNode *cur = ll->head;
@@ -194,8 +228,11 @@ void removeAllItems(LinkedList *ll)
 	ll->size = 0;
 }
 
-
-ListNode * findNode(LinkedList *ll, int index){
+/// @brief 연결 리스트에 주어진 인덱스 해당 노드를 찾음
+/// @param ll 
+/// @param index 찾을 노드의 인덱스
+/// @return 해당 노드 포인터, 존재하지 않으면 NULL 반환
+ListNode *findNode(LinkedList *ll, int index){
 
 	ListNode *temp;
 
@@ -217,6 +254,11 @@ ListNode * findNode(LinkedList *ll, int index){
 	return temp;
 }
 
+/// @brief 연결 리스트의 지정된 인덱스에 값을 가진 새 노드를 삽입
+/// @param ll 대상 연결 리스트 포인터
+/// @param index 삽입할 위치
+/// @param value 삽입할 값
+/// @return 성공 0, 실패 -1
 int insertNode(LinkedList *ll, int index, int value){
 
 	ListNode *pre, *cur;
@@ -257,7 +299,10 @@ int insertNode(LinkedList *ll, int index, int value){
 	return -1;
 }
 
-
+/// @brief 연결 리스트 지정된 인덱스 노드 제거
+/// @param ll 연결리스트 포인터
+/// @param index 제거할 인덱스
+/// @return 성공 0, 실패 -1
 int removeNode(LinkedList *ll, int index){
 
 	ListNode *pre, *cur;

@@ -112,7 +112,23 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	Stack s;			// 스택 초기화
+	s.ll.head = NULL;
+	s.ll.size = 0;
+
+	// Queue -> Temp Stack
+	while (!isEmptyQueue(q))
+	{
+		int temp = dequeue(q);
+		push(&s, temp);
+	}
+	 
+	// Temp Stack -> Queue
+	while (!isEmptyStack(&s))
+	{
+		int temp = pop(&s);
+		enqueue(q, temp);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -177,7 +193,7 @@ void printList(LinkedList *ll){
 	printf("\n");
 }
 
-ListNode * findNode(LinkedList *ll, int index){
+ListNode *findNode(LinkedList *ll, int index){
 
 	ListNode *temp;
 
@@ -230,7 +246,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	return -1;
 }
-
 
 int removeNode(LinkedList *ll, int index){
 

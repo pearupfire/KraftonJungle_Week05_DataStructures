@@ -90,7 +90,23 @@ int main()
 
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	BSTNode *cur = root; // 현재 노드: 루트
+	Stack s;			 // 스택 초기화
+	s.top = NULL;
+
+	while (cur != NULL || !isEmpty(&s)) // 현재 노드 있거나, 스택이 있다면 반복
+	{
+		// 왼쪽 자식 끝까지 push 왼쪽 자식이 없다면 종료 
+		while (cur != NULL) 
+		{
+			push(&s, cur);
+			cur = cur->left;
+		}
+		
+		cur = pop(&s); 
+		printf("%d ", cur->item); // 팝한 값 출력
+		cur = cur->right; // 오른쪽 서브트리 이동
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -145,7 +161,7 @@ void push(Stack *stack, BSTNode * node)
 	}
 }
 
-BSTNode * pop(Stack * s)
+BSTNode *pop(Stack * s)
 {
 	StackNode *temp, *t;
 	BSTNode * ptr;
@@ -165,7 +181,7 @@ BSTNode * pop(Stack * s)
 	return ptr;
 }
 
-BSTNode * peek(Stack * s)
+BSTNode *peek(Stack * s)
 {
 	StackNode *temp;
 	temp = s->top;
@@ -182,7 +198,6 @@ int isEmpty(Stack *s)
 	else
 		return 0;
 }
-
 
 void removeAll(BSTNode **node)
 {

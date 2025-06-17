@@ -91,7 +91,38 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	Stack s;
+	s.top = NULL;
+	BSTNode *cur = root;
+	BSTNode *prev = NULL;
+
+	// 스택이 비어있지 않고, 현재 노드가 null이 아닐 때 반복
+	while (!isEmpty(&s) || cur != NULL)
+	{
+		// 왼쪽 자식 노드가 있을 때까지
+		while (cur != NULL)
+		{
+			push(&s, cur);
+			cur = cur->left;
+		}
+
+		// 상단 노드 확인
+		cur = peek(&s);
+
+		// 현재 노드가 오른쪽 자식이 없거나, 이전에 방문했던 노드가 현재 노드의 오른쪽 자식이라면
+		if (cur->right == NULL || cur->right == prev)
+		{
+			printf("%d ", cur->item);
+			pop(&s);
+			prev = cur; // 이전 방문 노드를 현재 노드로 갱신
+			cur = NULL; // 다음 반복에서 스택에서 노드를 꺼내기 위해 null로 초기화
+		}
+		else
+		{
+			// 오른족 자식이 있고, 아직 방문하지 않았다면 오른쪽 자식으로 이동
+			cur = cur->right;
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

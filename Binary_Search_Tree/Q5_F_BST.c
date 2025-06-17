@@ -91,14 +91,44 @@ int main()
 
 void postOrderIterativeS2(BSTNode *root)
 {
-	 /* add your code here */
+	if (root == NULL)
+		return;
+	
+	// 스택 초기화
+	Stack s1;
+	Stack s2;
+	s1.top = NULL;
+	s2.top = NULL;
+
+	// 루트 s1 push
+	push(&s1, root);
+
+	// s1 스택이 비어있을때까지 반복
+	while (!isEmpty(&s1))
+	{
+		BSTNode *cur = pop(&s1);
+		push(&s2, cur);
+		
+		if (cur->left != NULL)
+			push(&s1, cur->left);
+
+		if (cur->right != NULL)
+			push(&s1, cur->right);
+	}
+	
+	// s2 스택이 비어있을때까지 반복해서 출력
+	while (!isEmpty(&s2))
+	{
+		BSTNode *resultNode = pop(&s2);
+		printf("%d ", resultNode->item);
+	}
 }
 
 /* Given a binary search tree and a key, this function
    deletes the key and returns the new root. Make recursive function. */
 BSTNode* removeNodeFromTree(BSTNode *root, int value)
 {
-	/* add your code here */
+	
 }
 ///////////////////////////////////////////////////////////////////////////////
 

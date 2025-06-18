@@ -118,11 +118,11 @@ void moveOddItemsToBack(LinkedList *ll)
 			else // prev가 있으면
 			{
 				prev->next = cur->next;	// prev 갱신
-				cur = cur->next;		// 
+				cur = cur->next;		// 다음 노드 이동
 			}
 			
 			tail->next = oddNode; // tail 뒤에 홀수를 추가
-			oddNode->next = NULL; // 
+			oddNode->next = NULL; // tail 이므로 다음노드 null 처리 
 			tail = oddNode;		  // tail 갱신 
 		}
 		else // 짝수이면
